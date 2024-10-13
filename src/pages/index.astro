@@ -1,18 +1,114 @@
 ---
 import "@/styles/globals.css";
 import { Button } from "@/components/ui/button";
+
+const season24List = [
+	{
+		name: "立春",
+	},
+	{
+		name: "雨水",
+	},
+	{
+		name: "啓蟄",
+	},
+	{
+		name: "春分",
+	},
+	{
+		name: "清明",
+	},
+	{
+		name: "穀雨",
+	},
+	{
+		name: "立夏",
+	},
+	{
+		name: "小満",
+	},
+	{
+		name: "芒種",
+	},
+	{
+		name: "夏至",
+	},
+	{
+		name: "小暑",
+	},
+	{
+		name: "大暑",
+	},
+	{
+		name: "立秋",
+	},
+	{
+		name: "処暑",
+	},
+	{
+		name: "白露",
+	},
+	{
+		name: "秋分",
+	},
+	{
+		name: "寒露",
+	},
+	{
+		name: "霜降",
+	},
+	{
+		name: "立冬",
+	},
+	{
+		name: "小雪",
+	},
+	{
+		name: "大雪",
+	},
+	{
+		name: "冬至",
+	},
+	{
+		name: "小寒",
+	},
+	{
+		name: "大寒",
+	},
+];
 ---
 
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>季節の風習</title>
 	</head>
 	<body>
-		<h1 class:list={["text-5xl"]}>Astro</h1>
-		<Button>Hello World</Button>
+		<header>
+			<h1>
+				<a href="/">季節の風習</a>
+			</h1>
+		</header>
+		<main>
+			<div></div>
+			<section>
+				<h2>二十四節気</h2>
+				<ul>
+					{
+						season24List.map((item) => (
+							<li>
+								<a href="">{item.name}</a>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+		</main>
+		<footer>
+			<p>© 2024 uchidaaa</p>
+		</footer>
 	</body>
 </html>
