@@ -1,81 +1,10 @@
 ---
 import "@/styles/globals.css";
-import { Button } from "@/components/ui/button";
-
-const season24List = [
-	{
-		name: "立春",
-	},
-	{
-		name: "雨水",
-	},
-	{
-		name: "啓蟄",
-	},
-	{
-		name: "春分",
-	},
-	{
-		name: "清明",
-	},
-	{
-		name: "穀雨",
-	},
-	{
-		name: "立夏",
-	},
-	{
-		name: "小満",
-	},
-	{
-		name: "芒種",
-	},
-	{
-		name: "夏至",
-	},
-	{
-		name: "小暑",
-	},
-	{
-		name: "大暑",
-	},
-	{
-		name: "立秋",
-	},
-	{
-		name: "処暑",
-	},
-	{
-		name: "白露",
-	},
-	{
-		name: "秋分",
-	},
-	{
-		name: "寒露",
-	},
-	{
-		name: "霜降",
-	},
-	{
-		name: "立冬",
-	},
-	{
-		name: "小雪",
-	},
-	{
-		name: "大雪",
-	},
-	{
-		name: "冬至",
-	},
-	{
-		name: "小寒",
-	},
-	{
-		name: "大寒",
-	},
-];
+import { data } from "@/data.astro";
+import logoImage from "@/images/yuzu.png";
+import Image from "astro/components/Image.astro";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/noto-sans-jp";
 ---
 
 <html lang="ja">
@@ -84,31 +13,54 @@ const season24List = [
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="robots" content="noindex" />
 		<title>季節の風習</title>
 	</head>
-	<body>
-		<header>
-			<h1>
-				<a href="/">季節の風習</a>
-			</h1>
+	<body class:list={["min-h-lvh"]}>
+		<header class:list={["py-2", "px-4", "md:py-4", "md:px-8"]}>
+			<div class:list={["md:max-w-5xl", "md:mx-auto"]}>
+				<h1 class:list={["text-xl", "flex", "gap-2", "md:text-3xl"]}>
+					<a href="/" class:list={["flex", "gap-2"]}>
+						<Image src={logoImage} alt="" class:list={["w-8"]} />
+						季節の風習
+					</a>
+				</h1>
+			</div>
 		</header>
-		<main>
-			<div></div>
-			<section>
-				<h2>二十四節気</h2>
-				<ul>
-					{
-						season24List.map((item) => (
-							<li>
-								<a href="">{item.name}</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+		<main class:list={["pt-20"]}>
+			<div
+				class:list={[
+					"flex",
+					"flex-col",
+					"gap-y-20",
+					"mt-20",
+					"pb-14",
+					"md:max-w-3xl",
+					"md:mx-auto",
+					"md:pb-40",
+					"md:gap-y-28",
+				]}
+			>
+				<section>
+					<h2>二十四節気</h2>
+					<ul>
+						{
+							data.map((item) => (
+								<li>
+									<a href="">{item.name}</a>
+									<ul>
+										{item.seasons.map((season) => (
+											<li>
+												<a href="">{season.name}</a>
+											</li>
+										))}
+									</ul>
+								</li>
+							))
+						}
+					</ul>
+				</section>
+			</div>
 		</main>
-		<footer>
-			<p>© 2024 uchidaaa</p>
-		</footer>
 	</body>
 </html>
