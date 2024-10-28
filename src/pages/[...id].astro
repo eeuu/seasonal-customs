@@ -6,6 +6,16 @@ import Image from "astro/components/Image.astro";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/noto-sans-jp";
 import "@fontsource-variable/noto-serif-jp";
+export async function getStaticPaths() {
+	return data.map(({ id, name, description, date, parent, content }) => {
+		return {
+			params: { id },
+			props: { name, description, date, parent, content },
+		};
+	});
+}
+
+const { name, description, date, parent, content } = Astro.props;
 ---
 
 <html lang="ja">
@@ -15,17 +25,17 @@ import "@fontsource-variable/noto-serif-jp";
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="robots" content="noindex" />
-		<title>季節の風習</title>
+		<title>{name}</title>
 	</head>
 	<body class:list={["min-h-lvh"]}>
 		<header class:list={["py-2", "px-4", "md:py-4", "md:px-8"]}>
 			<div class:list={["md:max-w-5xl", "md:mx-auto"]}>
-				<h1 class:list={["text-xl", "flex", "gap-2", "md:text-3xl"]}>
+				<span class:list={["text-xl", "flex", "gap-2", "md:text-3xl"]}>
 					<a href="/" class:list={["flex", "gap-2"]}>
 						<Image src={logoImage} alt="" class:list={["w-8"]} />
 						季節の風習
 					</a>
-				</h1>
+				</span>
 			</div>
 		</header>
 		<main class:list={["pt-20"]}>
@@ -42,27 +52,10 @@ import "@fontsource-variable/noto-serif-jp";
 					"md:gap-y-28",
 				]}
 			>
-				<section>
-					<h2>二十四節気・七十二候</h2>
-					<ul>
-						{
-							data.map((item) => (
-								<li>
-									<a href={`/${item.id}`}>{item.name}</a>
-									<ul>
-										{data
-											.filter((season) => season.parent === item.id)
-											.map((seasonItem) => (
-												<li>
-													<a href={`/${seasonItem.id}`}>{seasonItem.name}</a>
-												</li>
-											))}
-									</ul>
-								</li>
-							))
-						}
-					</ul>
-				</section>
+				<article>
+					<h1>{name}</h1>
+					<p set:html={content} />
+				</article>
 			</div>
 		</main>
 	</body>

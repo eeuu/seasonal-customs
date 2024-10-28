@@ -13,6 +13,7 @@ export default {
 			colors: {},
 			fontFamily: {
 				sans: ['Noto Sans JP Variable', "sans-serif", ...defaultTheme.fontFamily.sans],
+				serif: ['Noto Serif JP Variable', "serif"],
 				inter: ['Inter Variable', "sans-serif", ...defaultTheme.fontFamily.sans],
 			},
 		}
