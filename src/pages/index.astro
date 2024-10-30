@@ -1,16 +1,174 @@
 ---
-
+import "@/styles/globals.css";
+import { data } from "@/data.astro";
+import logoImage from "@/images/yuzu.png";
+import Image from "astro/components/Image.astro";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/noto-sans-jp";
+import "@fontsource-variable/noto-serif-jp";
 ---
 
-<html lang="en">
+<style is:global>
+	body {
+		position: relative;
+		&::before {
+			z-index: -10;
+			position: absolute;
+			inset: 0;
+			margin: auto;
+			display: block;
+			content: "";
+			width: 100%;
+			height: 100%;
+			filter: contrast(100%) brightness(100%);
+			background: rgb(2, 71, 76);
+			background: linear-gradient(
+				165deg,
+				rgba(244, 196, 0, 0.3) 0%,
+				rgba(246, 164, 0, 0.3) 40%,
+				rgba(1, 126, 97, 0.3) 100%
+			);
+			/* url("/noise.svg"); */
+		}
+	}
+	a {
+		&:hover,
+		&:focus-visible {
+			opacity: 0.7;
+		}
+	}
+</style>
+
+<html lang="ja">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<meta name="robots" content="noindex" />
+		<title>季節の風習</title>
 	</head>
-	<body>
-		<h1>Astro</h1>
+	<body class:list={["min-h-lvh"]}>
+		<header class:list={["py-2", "px-4", "md:py-4", "md:px-8"]}>
+			<div class:list={["md:max-w-5xl", "md:mx-auto"]}>
+				<h1 class:list={["text-xl", "flex", "gap-2", "md:text-3xl"]}>
+					<a href="/" class:list={["flex", "gap-2"]}>
+						<Image src={logoImage} alt="" class:list={["w-8"]} />
+						季節の風習
+					</a>
+				</h1>
+			</div>
+		</header>
+		<main class:list={["pt-20", "px-4"]}>
+			<div
+				class:list={[
+					"pb-14",
+					"md:max-w-3xl",
+					"md:mx-auto",
+					"md:pb-40",
+					"md:gap-y-28",
+				]}
+			>
+				<section>
+					<h2 class:list={["text-3xl"]}>二十四節気・七十二候</h2>
+					<ul class:list={["flex", "flex-col", "mt-8", "gap-y-20"]}>
+						{
+							data
+								.filter((item) => !item.parent)
+								.map((termItem) => (
+									<li>
+										<a
+											href={`/${termItem.id}`}
+											class:list={[
+												"border",
+												"border-black",
+												"p-8",
+												"block",
+												"rounded-lg",
+												"relative",
+											]}
+										>
+											<span
+												class:list={[
+													"absolute",
+													"bottom-2",
+													"right-2",
+													"text-xs",
+													"text-gray-400",
+												]}
+											>
+												二十四節気
+											</span>
+											<span class:list={["flex", "items-baseline", "gap-x-2"]}>
+												<h3 class:list={["text-xl"]}>{termItem.name}</h3>
+												<span class:list={["text-sm"]}>{termItem.date}</span>
+											</span>
+											<p class:list={["mt-2"]}>{termItem.description}</p>
+										</a>
+										<ul
+											class:list={[
+												"mt-4",
+												"flex",
+												"flex-col",
+												"md:grid",
+												"md:grid-cols-3",
+												"gap-4",
+											]}
+										>
+											{data
+												.filter((season) => season.parent === termItem.id)
+												.map((seasonItem) => (
+													<li>
+														<a
+															href={`/${seasonItem.id}`}
+															class:list={[
+																"border",
+																"border-black",
+																"p-8",
+																"block",
+																"rounded-lg",
+																"relative",
+																"h-full",
+															]}
+														>
+															<span
+																class:list={[
+																	"absolute",
+																	"bottom-2",
+																	"right-2",
+																	"text-xs",
+																	"text-gray-400",
+																]}
+															>
+																七十二候
+															</span>
+															<span
+																class:list={[
+																	"flex",
+																	"items-baseline",
+																	"gap-x-2",
+																]}
+															>
+																<h3 class:list={["text-lg"]}>
+																	{seasonItem.name}
+																</h3>
+																<span class:list={["text-xs"]}>
+																	{seasonItem.date}
+																</span>
+															</span>
+															<p class:list={["mt-2", "text-sm"]}>
+																{seasonItem.description}
+															</p>
+														</a>
+													</li>
+												))}
+										</ul>
+									</li>
+								))
+						}
+					</ul>
+				</section>
+			</div>
+		</main>
 	</body>
 </html>

@@ -1,0 +1,97 @@
+---
+import "@/styles/globals.css";
+import { data } from "@/data.astro";
+import logoImage from "@/images/yuzu.png";
+import Image from "astro/components/Image.astro";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/noto-sans-jp";
+import "@fontsource-variable/noto-serif-jp";
+export async function getStaticPaths() {
+	return data.map(({ id, name, description, date, parent, content }) => {
+		return {
+			params: { id },
+			props: { name, description, date, parent, content },
+		};
+	});
+}
+
+const { name, description, date, parent, content } = Astro.props;
+---
+
+<style is:global>
+	body {
+		position: relative;
+		&::before {
+			z-index: -10;
+			position: absolute;
+			inset: 0;
+			margin: auto;
+			display: block;
+			content: "";
+			width: 100%;
+			height: 100%;
+			filter: contrast(100%) brightness(100%);
+			background: rgb(2, 71, 76);
+			background: linear-gradient(
+				165deg,
+				rgba(244, 196, 0, 0.3) 0%,
+				rgba(246, 164, 0, 0.3) 40%,
+				rgba(1, 126, 97, 0.3) 100%
+			);
+			/* url("/noise.svg"); */
+		}
+	}
+	a {
+		&:hover,
+		&:focus-visible {
+			opacity: 0.7;
+		}
+	}
+</style>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="robots" content="noindex" />
+		<title>{name}</title>
+	</head>
+	<body class:list={["min-h-lvh"]}>
+		<header class:list={["py-2", "px-4", "md:py-4", "md:px-8"]}>
+			<div class:list={["md:max-w-5xl", "md:mx-auto"]}>
+				<span class:list={["text-xl", "flex", "gap-2", "md:text-3xl"]}>
+					<a href="/" class:list={["flex", "gap-2"]}>
+						<Image src={logoImage} alt="" class:list={["w-8"]} />
+						季節の風習
+					</a>
+				</span>
+			</div>
+		</header>
+		<main class:list={["pt-20", "px-4"]}>
+			<div
+				class:list={[
+					"pb-14",
+					"md:max-w-3xl",
+					"md:mx-auto",
+					"md:pb-40",
+					"md:gap-y-28",
+				]}
+			>
+				<article>
+					<div class:list={["flex", "gap-x-4"]}>
+						<h1 class:list={["text-5xl", "flex-shrink-0"]}>{name}</h1>
+						<span>
+							{date}
+							<p>{description}</p>
+						</span>
+					</div>
+					<div
+						set:html={content}
+						class:list={["mt-20", "text-lg", "leading-loose"]}
+					/>
+				</article>
+			</div>
+		</main>
+	</body>
+</html>
